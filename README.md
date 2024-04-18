@@ -40,3 +40,67 @@ npm run build
 ```
 yarn build
 ```
+## Паттерн
+Для проектирования применены паттерны MVP (Model-View-Presenter)
+## Описание моделей
+### Интерфейс  `IApplication`
+Содержит логику обработки данных приложения
+
+- `setItemList` - установка списка товаров
+- `addItemToCart` - добавление в корзину
+- `removeItemFromCart` - void
+- `setUserInfo` - установка значений покупателя
+- `setPaymentInfo` - установка информации о способе оплаты
+- `makePayment` - передача данных для оплаты
+### Интерфейс `IItem`
+Базовая модель товара
+- `id: string`
+- `title:string`
+- `price:number`
+### Интерфейс `IItemCard`
+Модель товара для списка товаров расширяет `IItem`
+- `category:string`
+- `image:string`
+### Интерфейс `IItemFullCard`
+Модель товара для модального окна, расширяет `IItemCard`
+- `description:string`
+### Интерфейс `ICart`
+Модель корзины
+- `ItemList: IItem[]`
+- `totalPrice: number`
+### Интерфейс `IUserInfo`
+Модель данных формы контактных данных
+- `email:string`
+- `phone:string`
+### Интерфейс `IPaymentInfo`
+Модель данных формы оплаты
+- `address:string`
+- `paymentMethod: "online" | "offline"`
+### Интерфейс `IOrder`
+Модель данных заказа, расширяет `IPaymentInfo, IUserInfo`
+- `totalPrice:number`
+- `items: string[]`
+### Интерфейс `IOrderSuccess`
+Модель успешного оформления
+- `id:string`
+- `totalPrice: number`
+### Интерфейс `IPageView`
+View главной страницы
+- `ItemList: IItemCard[]`
+- `cartCount: number`
+### Интерфейс `IModalView`
+View модального окна
+`view: HTMLElement`
+### Интерфейс `IFormView`
+View формы
+`valid: boolean`
+### Класс `Api`
+Класс позволяет делать запросы к API
+- Метод `handleResponse` обрабатывает ответ от сервера
+- Метод `get` делает GET-запрос
+- Метод `post` делает POST-запрос
+### Класс `Component`
+Нужен для создания компонента и установки стандартных методов
+### Класс `EventEmitter`
+Брокер событий для подписки на события
+
