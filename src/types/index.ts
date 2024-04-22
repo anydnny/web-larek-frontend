@@ -1,65 +1,78 @@
-// Модель обработки данных приложения
-interface IApplication {
-  // Методы с товарами
-  setItemList(items: IItem[]): void, // установка списка товаров
-  addItemToCart(item: IItem): void // добавление в корзину
-  removeItemFromCart(item: IItem): void
-  // Методы для работы с формой
-  setUserInfo(userInfo: IUserInfo):void, // установка значений покупателя
-  setPaymentInfo(paymentInfo: IPaymentInfo):void // установка информации о способе оплаты
-  makePayment(order: IOrder): void // передача данных для оплаты
+// Интерфейс продукта
+export interface IProduct {
+  id: string,
+  description: string,
+  category: string,
+  image: string,
+  price: number | null
 }
-// Модель товара для корзины
-interface IItem {
+// Интерфейс ответа от сервера при получение каталога
+export interface IProductResponse {
+  total: number,
+  items: IProduct[]
+}
+// Интерфейс продукта в корзине
+export interface ICartProduct {
   id: string,
   title: string,
   price: number
 }
-// Модель товара для списка товаров
-interface IItemCard extends IItem{
-  category: string,
-  image: string
+// Интерфейс корзины
+export interface ICart {
+  products: ICartProduct[],
+  totalPrice: number | null
 }
-// Модель товара для модального окна
-interface IItemFullCard extends IItemCard {
-  description: string
+// Интерфейс взаимодействия с сервером
+export interface IShopApi {
+  getCatalog(): Promise<IProduct[]>,
+  getProductById(id: string): Promise<IProduct>,
+  order(order: IOrder): Promise<ICompleteOrder>
 }
-// Модель корзины
-interface ICart {
-  ItemList: IItem[],
-  totalPrice: number
+// Интерфейс формы оплаты
+export interface IPaymentInfo {
+  method: "online" | "offline",
+  address: string
 }
-// Модель данных формы контактных данных
-interface IUserInfo {
+// Интерфейс формы данных покупателя
+export interface IUserInfo {
   email: string,
   phone: string
 }
-// Модель данных формы оплаты
-interface IPaymentInfo {
-  address: string,
-  paymentMethod: "online" | "offline"
-}
-// Модель данных заказа
-interface IOrder extends IPaymentInfo, IUserInfo{
+// Интерфейс целиковой информации о заказе
+export interface IOrder extends IPaymentInfo, IUserInfo {
   totalPrice: number,
-  items: string[]
+  products: string[]
 }
-// Модель успешного оформления
-interface IOrderSuccess {
-  id: string,
-  totalPrice: number
+// Интерфейс успешной оплаты
+export interface ICompleteOrder {
+	id: string,
+	totalPrice: number,
 }
-// View главной страницы
-interface IPageView {
-  ItemList: IItemCard[],
-  cartCount: number
-}
-// View модального окна
-interface IModalView{
-  view: HTMLElement
-}
-// View формы
-interface IFormView {
+// Интерфейс формы
+export interface IForm {
   valid: boolean
 }
+// Интерфейс модального окна
+export interface IModal {
+  view: HTMLElement
+}
+// Интерфей страницы
+export interface IShopPage {
+  catalog: IProduct[],
+  cartCounter: number,
+}
 
+export interface IAppData {
+  catalog: IProduct[],
+  cart: ICart,
+  selectedProduct: string | null,
+  order: IOrder,
+  setCatalog(products: IProduct[]): void,
+  setSelectedProduct(product: IProduct): void,
+  addProductToCart(product: ICartProduct): void,
+  removeProductFromCart(product: ICartProduct): void,
+  setPaymentInfo(info: IPaymentInfo): void,
+  setUserInfo(info: IUserInfo): void,
+  makeOrder(): Promise<ICompleteOrder>,
+  clearOrder(): void
+}
