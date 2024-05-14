@@ -1,6 +1,7 @@
 // Интерфейс продукта
 export interface IProduct {
   id: string,
+  title: string,
   description: string,
   category: string,
   image: string,
@@ -15,12 +16,13 @@ export interface IProductResponse {
 export interface ICartProduct {
   id: string,
   title: string,
-  price: number
+  price: number,
+  index: number
 }
 // Интерфейс корзины
 export interface ICart {
-  products: ICartProduct[],
-  totalPrice: number | null
+  products: HTMLElement[],
+  totalPrice: number | null,
 }
 // Интерфейс взаимодействия с сервером
 export interface IShopApi {
@@ -41,7 +43,7 @@ export interface IUserInfo {
 // Интерфейс целиковой информации о заказе
 export interface IOrder extends IPaymentInfo, IUserInfo {
   totalPrice: number,
-  products: string[]
+  products: IProduct[]
 }
 // Интерфейс успешной оплаты
 export interface ICompleteOrder {
@@ -64,15 +66,14 @@ export interface IShopPage {
 
 export interface IAppData {
   catalog: IProduct[],
-  cart: ICart,
-  selectedProduct: string | null,
+  selectedProduct: IProduct | null,
   order: IOrder,
   setCatalog(products: IProduct[]): void,
   setSelectedProduct(product: IProduct): void,
-  addProductToCart(product: ICartProduct): void,
-  removeProductFromCart(product: ICartProduct): void,
-  setPaymentInfo(info: IPaymentInfo): void,
-  setUserInfo(info: IUserInfo): void,
-  makeOrder(): Promise<ICompleteOrder>,
-  clearOrder(): void
+//   addProductToCart(product: ICartProduct): void,
+//   removeProductFromCart(product: ICartProduct): void,
+//   setPaymentInfo(info: IPaymentInfo): void,
+//   setUserInfo(info: IUserInfo): void,
+//   makeOrder(): Promise<ICompleteOrder>,
+//   clearOrder(): void
 }
