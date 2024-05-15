@@ -3,7 +3,7 @@ import { Component } from "../base/component";
 import { ensureElement } from "../../utils/utils";
 import { ITEM_CURRENCY, ITEM_NOCURRENCY, ITEM_CATEGORY } from "../../utils/constants";
 
-export class Product<T extends IProduct | {}> extends Component<T | IProduct> {
+export class Product<T extends IProduct | object> extends Component<T | IProduct> {
 
   protected _id: string;
   protected _title: HTMLElement;
@@ -12,7 +12,6 @@ export class Product<T extends IProduct | {}> extends Component<T | IProduct> {
   protected _description?: HTMLElement;
   protected _category?: HTMLElement
   protected _productButton?: HTMLElement;
-  events?: {onClick: (event: MouseEvent) => void}
 
   constructor(container: HTMLElement, events?:{onClick: (event: MouseEvent) => void}) {
     super(container);
@@ -23,7 +22,9 @@ export class Product<T extends IProduct | {}> extends Component<T | IProduct> {
     this._image = container.querySelector(".card__image");
     this._productButton = container.querySelector('.card__button');
 
-    if(events) {
+    if(events && this._productButton) {
+      this._productButton.addEventListener('click', events.onClick)
+    } else if (events && !this._productButton) {
       this.container.addEventListener('click', events.onClick)
     }
   }

@@ -24,7 +24,7 @@ export class Page extends Component<IShopPage> {
   set catalog(items: HTMLElement[]) {
     this._catalog.replaceChildren(...items)
   }
-  set cartCounter(value:number) {
+  set cartCounter(value: number) {
     this.setText(this._cartCounter, String(value))
   }
   set lockedWrapper(value: boolean) {

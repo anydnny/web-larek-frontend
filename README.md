@@ -78,12 +78,14 @@ yarn build
 Методы
 - `setCatalog(products: IProduct[]): void` - получение стартового каталога
 - `setSelectedProduct(product: IProduct): void` - получение продукта для показа в модальном окне
-- `addProductToCart(product: ICartProduct): void` - добавление товара в корзину
-- `removeProductFromCart(product: ICartProduct): void` - удаление товара из корзины
-- `setPaymentInfo(info: IPaymentInfo): void` - установка данны о платеже из формы
-- `setUserInfo(info: IUserInfo): void` - установка данны о покупателе из формы
-- `makeOrder(): Promise<ICompleteOrder>`  - переход к странице оплаты, отпарвка заказа на сервер
-- `clearOrder(): void` - очистка данных о заказе
+- `setBaseOrder(): IOrder` - eстановка стандартного значения магазина
+- `addToCart(product: IProduct): void` - метод добавления в корзину заказа
+- `removeFromCart(product: IProduct): void` - метод удаления из заказа
+- `checkItemInCart(product: IProduct): boolean` - проверка наличия товара в корзине (для отображения кнопок)
+- `getTotalPrice(): number` - получение финальной суммы заказа
+- `setPaymentInfo(data: IPaymentInfo): void` - установка значений формы оплаты в заказ
+- `setUserInfo(data: IUserInfo): void` - установка значений формы клиентских данных в заказ
+- `sendOrder(): void` - переход к оплате заказа
 ## Слой View
 ### Интерфейс `IProduct`
 Интерфейс карточки продукта, который будет использован для создания класса `Product`, где будет содержаться информация о товаре. Содержит следующие свойства:
@@ -138,3 +140,21 @@ yarn build
 - `cartCounter: number` - счётчик товаров в корзине
 ## Слой Presenter
 В качестве презентера будет использован код в файле `src\index.ts`, где будет собрано и всё приложение из всех остальных файлов.
+Содержит следующие события:
+- `store:init` - инициализация магазина, получение списка товаров
+- `product:click` - нажатие на карточку продукта, выбирает продукт
+- `product:open` - открывает карточку выбранного продукта
+- `modal:open` - открывает модальное окно
+- `modal:close` - закрывает модальное окно
+- `cart:render` - открывает корзину с товарами
+- `cart:add` - добавляет выбранный товар в корзину
+- `cart:remove` - удаляет товар из корзины
+- `counter:update` - обновляет счетчик товаров в корзине
+- `paymentForm:render` - открывает форму оплаты
+- `paymentForm:change` - отслеживает изменения инпутов в форме оплаты
+- `paymentForm:submit` - переходит от формы оплаты к форме персональнх данных
+- `userForm:render` - открывает форму персональных данных
+- `userForm:change` - отслеживает изменения инпутов в форме персональных данных
+- `userForm:submit` - переходит к отправке данных на сервер
+- `order:send` - отправляет данные заказа на сервер
+- `order:success` - отображает окно успешной оплаты

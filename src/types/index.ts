@@ -12,6 +12,7 @@ export interface IProductResponse {
   total: number,
   items: IProduct[]
 }
+
 // Интерфейс продукта в корзине
 export interface ICartProduct {
   id: string,
@@ -32,7 +33,7 @@ export interface IShopApi {
 }
 // Интерфейс формы оплаты
 export interface IPaymentInfo {
-  method: "online" | "offline",
+  method: "online" | "offline" | "",
   address: string
 }
 // Интерфейс формы данных покупателя
@@ -48,7 +49,7 @@ export interface IOrder extends IPaymentInfo, IUserInfo {
 // Интерфейс успешной оплаты
 export interface ICompleteOrder {
 	id: string,
-	totalPrice: number,
+	total: number,
 }
 // Интерфейс формы
 export interface IForm {
@@ -70,10 +71,12 @@ export interface IAppData {
   order: IOrder,
   setCatalog(products: IProduct[]): void,
   setSelectedProduct(product: IProduct): void,
-//   addProductToCart(product: ICartProduct): void,
-//   removeProductFromCart(product: ICartProduct): void,
-//   setPaymentInfo(info: IPaymentInfo): void,
-//   setUserInfo(info: IUserInfo): void,
-//   makeOrder(): Promise<ICompleteOrder>,
-//   clearOrder(): void
+  setBaseOrder(): IOrder,
+  addToCart(product: IProduct): void,
+  removeFromCart(product: IProduct): void,
+  checkItemInCart(product: IProduct): boolean,
+  getTotalPrice(): number,
+  setPaymentInfo(data: IPaymentInfo): void,
+  setUserInfo(data: IUserInfo): void,
+  sendOrder(): void
 }

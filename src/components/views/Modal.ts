@@ -13,8 +13,8 @@ export class Modal extends Component<IModal> {
     this._view = ensureElement<HTMLElement>('.modal__content', container);
 
     this.container.addEventListener('click', this.close.bind(this))
-    this._view.addEventListener('click', e => e.stopPropagation());
     this._closeButton.addEventListener('click', this.close.bind(this))
+    this._view.addEventListener('click', (e) => e.stopPropagation());
   }
 
   set view(data: HTMLElement) {

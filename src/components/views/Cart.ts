@@ -23,14 +23,16 @@ export class Cart extends Component<ICart> {
   protected _productsList: HTMLElement;
   protected _totalPrice: HTMLElement;
   protected _orderButton: HTMLElement;
-  protected _events: EventEmitter;
 
-  constructor(container: HTMLElement, events: EventEmitter) {
+  constructor(container: HTMLElement, protected events: EventEmitter) {
     super(container);
     this._productsList = ensureElement('.basket__list', container)
     this._totalPrice = ensureElement('.basket__price', container)
     this._orderButton = ensureElement('.button', container);
 
+    this._orderButton.addEventListener('click', () => {
+      this.events.emit('paymentForm:render')
+    })
   }
 
   set products(products: HTMLElement[]) {
