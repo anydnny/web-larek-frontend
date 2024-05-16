@@ -1,6 +1,6 @@
-import { IAppData, IOrder, IProduct, IUserInfo } from '../../types/index';
-import { IEvents } from '../base/events';
-import { IPaymentInfo } from '../../types/index';
+import { IAppData, IOrder, IProduct, IUserInfo } from '../types/index';
+import { IEvents } from './base/Events';
+import { IPaymentInfo } from '../types/index';
 
 export class AppData implements IAppData {
 	catalog: IProduct[] = [];
